@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HnDateService } from '../services/hn-date.service';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-nav',
@@ -10,7 +11,7 @@ export class NavComponent implements OnInit {
 
   today: number = Date.now();
   dayOfYear: number;
-  constructor(private hnDateService: HnDateService ) { }
+  constructor(private hnDateService: HnDateService, private auth: AuthService ) { }
 
   ngOnInit() {
     this.dayOfYear = this.hnDateService.setDayOfTheYear();

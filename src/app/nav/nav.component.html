@@ -1,26 +1,37 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" routerLink="/dashboard">H.N. Tracker-Dashboard</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText"
+    aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarText">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" routerLink="/expense">EpenseSystem<span class="sr-only">(current)</span></a>
+        <a class="nav-link" routerLink="/expense">EpenseSystem
+          <span class="sr-only">(current)</span>
+        </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" routerLink="/epicdiet">EpicDiet</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/pricing">Pricing</a>
+        <a class="nav-link" routerLink="/profile">Profile</a>
+      </li>
+      <li class="nav-item">
+          <span class="nav-link" *ngIf="!auth.isAuthenticated()" (click)="auth.login()">
+            Login</span>
+        </li>
+      <li class="nav-item">
+        <a class="nav-link" *ngIf="auth.isAuthenticated()" (click)="auth.logout()">
+          Log Out</a>
       </li>
     </ul>
     <span class="navbar-text">
       Today's Date: {{today}} and Day of the year {{dayOfYear}}
-    <p>Today is {{today | date}}</p>
-    <p>Or if you prefer, {{today | date:'fullDate'}}</p>
-    <!-- <p>The time is {{today | date:'jmZ'}}</p> -->
-    <p>Finally the date and time is {{today | date:'short'}}</p>
+      <p>Today is {{today | date}}</p>
+      <p>Or if you prefer, {{today | date:'fullDate'}}</p>
+      <!-- <p>The time is {{today | date:'jmZ'}}</p> -->
+      <p>Finally the date and time is {{today | date:'short'}}</p>
     </span>
   </div>
 </nav>
