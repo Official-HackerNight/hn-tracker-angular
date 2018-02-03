@@ -21,6 +21,7 @@ import { AuthService } from './auth/auth.service';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { ScopeGuardService } from './auth/scope-guard.service';
 import { ExpenseComponent } from './expense/expense.component';
+import { HttpClientModule } from '@angular/common/http';
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   console.log('Using the authHttpServiceFactory');
   return new AuthHttp(new AuthConfig({
@@ -62,6 +63,7 @@ const routes: Routes = [
     BrowserModule,
     ExpenseModule,
     HttpModule,
+    HttpClientModule,
     FormsModule // ngModule in html login
   ],
   providers: [
