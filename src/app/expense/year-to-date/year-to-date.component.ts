@@ -27,6 +27,7 @@ export class YearToDateComponent implements OnInit {
     this.test = this.expenseService.expenses$.subscribe();
     // works!
     // this.expenseService.persistExpense(new Expense(1, 'testing angular', 1, null, null, null));
+    this.expenseService.fetchExpenseYearTotal().subscribe(res => this.totalSpentForYear = res);
   }
 
 }

@@ -6,3 +6,7 @@
     <br> Daily Spent: {{spentPerDay | currency}}
   </ul>
 </div>
+<div (click)="showYtdExpense=!showYtdExpense">
+  Show ytd expense
+  <app-ytd-expense *ngIf="showYtdExpense"></app-ytd-expense>
+</div>
