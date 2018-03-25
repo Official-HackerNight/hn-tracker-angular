@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Expense } from '../../entities/expense';
 import { AuthService } from '../../auth/auth.service';
 import { FormsModule } from '@angular/forms';
+import { ExpenseApiService } from '../expense-services/expense-api.service';
 
 @Component({
   selector: 'app-new-expense',
@@ -11,22 +12,29 @@ import { FormsModule } from '@angular/forms';
 export class NewExpenseComponent implements OnInit {
 
   newExpense: Expense = {
-    id: 0,
-    amount: 20,
-    userId: 'test',
-    description: 'new expense testing',
-    date: '',
-    expenseType: 'single',
-    isActive: true
+    expenseId: 0,
+    amount: 0,
+    userId: '',
+    description: '',
+    date: null,
+    expenseType: {
+      'expenseTypeId': 1,
+      'type': 'single'
+    },
+    active: true,
+    occurs: 0
   };
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private expenseApiService: ExpenseApiService) { }
 
   ngOnInit() {
   }
 
   onSubmit(): void {
-    console.log('newExpense submitted: ' + JSON.stringify(this.newExpense));
+    this.newExpense.userId = this.authService.userProfile.sub;
+    console.log('newExpense submitted: ');
+    console.log(this.newExpense);
+    this.expenseApiService.persistExpense(this.newExpense);
   }
 
 }

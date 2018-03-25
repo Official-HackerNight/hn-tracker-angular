@@ -3,6 +3,7 @@ import { AUTH_CONFIG } from './auth0-variables';
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/filter';
 import * as auth0 from 'auth0-js';
+import { ExpenseApiService } from '../expense/expense-services/expense-api.service';
 
 @Injectable()
 export class AuthService {
@@ -19,7 +20,7 @@ export class AuthService {
     scope: this.requestedScopes
   });
 
-  constructor(public router: Router) {}
+  constructor(public router: Router, private expenseApiService: ExpenseApiService) { }
 
   public login(): void {
     console.log('hey youre logging in');
@@ -41,7 +42,7 @@ export class AuthService {
     });
   }
 
-  public getProfile(cb): void {
+  public getProfile(cb = (err, profile) => { }): void {
     const accessToken = localStorage.getItem('access_token');
     if (!accessToken) {
       throw new Error('Access token must exist to fetch profile');
@@ -51,6 +52,8 @@ export class AuthService {
     this.auth0.client.userInfo(accessToken, (err, profile) => {
       if (profile) {
         self.userProfile = profile;
+        this.expenseApiService.fetchExpenses(this.userProfile.sub);
+        this.expenseApiService.fetchExpensesLifeTimeTotal(this.userProfile.sub);
       }
       cb(err, profile);
     });
@@ -71,6 +74,7 @@ export class AuthService {
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('expires_at', expiresAt);
     localStorage.setItem('scopes', JSON.stringify(scopes));
+    this.getProfile();
   }
 
   public logout(): void {
